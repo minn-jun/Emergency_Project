@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대피소 찾기</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏠 대피소 찾기</h1>
+            <p>주변 대피소를 쉽게 찾아보세요</p>
+        </header>
+
+        <div class="controls">
+            <div class="search-section">
+                <div class="input-group">
+                    <input type="text" id="locationInput" placeholder="위치를 입력하세요 (예: 명동, 홍대입구역)">
+                    <button id="searchBtn">검색</button>
+                </div>
+                <div id="searchResults" class="search-results"></div>
+            </div>
+
+            <div class="range-section">
+                <label for="rangeSlider">검색 범위: <span id="rangeValue">500</span>m</label>
+                <input type="range" id="rangeSlider" min="100" max="2000" value="500" step="100">
+            </div>
+
+            <div class="info-section">
+                <div class="shelter-count">
+                    찾은 대피소: <span id="shelterCount">0</span>개
+                </div>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+
+        <div class="shelter-list">
+            <h3>대피소 목록</h3>
+            <div id="shelterListContainer"></div>
+        </div>
+    </div>
+    <script>
+      // 카카오맵 로드 후 실행
+      kakao.maps.load(function() {
+          console.log('카카오맵 API 로드 성공!');
+          alert('카카오맵 API가 정상적으로 로드되었습니다.');
+      });
+    </script>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey='2cf762e3ae392212c18ff36925b93e78'&libraries=services&autoload=false"></script>
+    <script src="script.js"></script>
+</body>
+</html>
