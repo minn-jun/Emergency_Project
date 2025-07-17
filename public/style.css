@@ -44,6 +44,51 @@ header p {
     margin-bottom: 20px;
 }
 
+.disaster-type-section {
+    margin-bottom: 25px;
+}
+
+.disaster-type-section h3 {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.radio-group label {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+    display: none; /* 실제 라디오 버튼 숨기기 */
+}
+
+.radio-group span {
+    padding: 8px 16px;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+/* 선택됐을 때 스타일 */
+.radio-group input[type="radio"]:checked + span {
+    background-color: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.radio-group label:hover span {
+    border-color: #764ba2;
+}
+
 .search-section {
     margin-bottom: 20px;
 }

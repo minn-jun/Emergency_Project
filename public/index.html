@@ -1,57 +1,100 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>대피소 찾기</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <h1>🏠 대피소 찾기</h1>
-            <p>주변 대피소를 쉽게 찾아보세요</p>
-        </header>
+      <header>
+        <h1>🏠 대피소 찾기</h1>
+        <p>주변 대피소를 쉽게 찾아보세요</p>
+      </header>
 
-        <div class="controls">
-            <div class="search-section">
-                <div class="input-group">
-                    <input type="text" id="locationInput" placeholder="위치를 입력하세요 (예: 명동, 홍대입구역)">
-                    <button id="searchBtn">검색</button>
-                </div>
-                <div id="searchResults" class="search-results"></div>
-            </div>
+      <div class="controls">
 
-            <div class="range-section">
-                <label for="rangeSlider">검색 범위: <span id="rangeValue">500</span>m</label>
-                <input type="range" id="rangeSlider" min="100" max="2000" value="500" step="100">
-            </div>
-
-            <div class="info-section">
-                <div class="shelter-count">
-                    찾은 대피소: <span id="shelterCount">0</span>개
-                </div>
-            </div>
+        <div class="disaster-type-section">
+          <h3>재난 유형 선택</h3>
+          <div class="radio-group" id="disasterTypeGroup">
+            <label>
+              <input type="radio" name="disasterType" value="default" checked/>
+              <span>기본 (민방위대피소)</span>
+            </label>
+            <label>
+              <input type="radio" name="disasterType" value="earthquake" />
+              <span>지진</span>
+            </label>
+            <label>
+              <input type="radio" name="disasterType" value="flood" />
+              <span>태풍/홍수</span>
+            </label>
+            <label>
+              <input type="radio" name="disasterType" value="heatwave" />
+              <span>폭염</span>
+            </label>
+            <label>
+              <input type="radio" name="disasterType" value="coldwave" />
+              <span>한파</span>
+            </label>
+            <label>
+              <input type="radio" name="disasterType" value="attack" />
+              <span>공습</span>
+            </label>
+          </div>
         </div>
 
-        <div class="map-container">
-            <div id="map"></div>
+        <div class="search-section">
+          <div class="input-group">
+            <input
+              type="text"
+              id="locationInput"
+              placeholder="위치를 입력하세요 (예: 명동, 홍대입구역)"
+            />
+            <button id="searchBtn">검색</button>
+          </div>
+          <div id="searchResults" class="search-results"></div>
         </div>
 
-        <div class="shelter-list">
-            <h3>대피소 목록</h3>
-            <div id="shelterListContainer"></div>
+        <div class="range-section">
+          <label for="rangeSlider"
+            >검색 범위: <span id="rangeValue">200</span>m</label
+          >
+          <input
+            type="range"
+            id="rangeSlider"
+            min="100"
+            max="1000"
+            value="200"
+            step="100"
+          />
         </div>
+
+        <div class="info-section">
+          <div class="shelter-count">
+            찾은 대피소: <span id="shelterCount">0</span>개
+          </div>
+        </div>
+      </div>
+
+      <div class="map-container">
+        <div id="map"></div>
+      </div>
+
+      <div class="shelter-list">
+        <h3>대피소 목록</h3>
+        <div id="shelterListContainer"></div>
+      </div>
     </div>
-    <script>
-      // 카카오맵 로드 후 실행
-      kakao.maps.load(function() {
-          console.log('카카오맵 API 로드 성공!');
-          alert('카카오맵 API가 정상적으로 로드되었습니다.');
-      });
-    </script>
 
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey='2cf762e3ae392212c18ff36925b93e78'&libraries=services&autoload=false"></script>
+    <!-- 카카오맵 API를 먼저 로드 -->
+    <script
+      type="text/javascript"
+      src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=7ce13f8147589ba5fcadecbc7a8eabe9&libraries=services&autoload=false"
+    ></script>
+
+    <!-- 그 다음에 실행 코드 -->
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
