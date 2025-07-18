@@ -1,304 +1,355 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 header {
-    text-align: center;
-    margin-bottom: 30px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  text-align: center;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
+  font-size: 2.5em;
+  margin-bottom: 10px;
 }
 
 header p {
-    font-size: 1.1em;
-    opacity: 0.9;
+  font-size: 1.1em;
+  opacity: 0.9;
 }
 
 .controls {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 .disaster-type-section {
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .disaster-type-section h3 {
-    font-size: 1.2em;
-    color: #333;
-    margin-bottom: 15px;
+  font-size: 1.2em;
+  color: #333;
+  margin-bottom: 15px;
 }
 
 .radio-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .radio-group label {
-    display: inline-block;
-    cursor: pointer;
+  display: inline-block;
+  cursor: pointer;
 }
 
-.radio-group input[type="radio"] {
-    display: none; /* 실제 라디오 버튼 숨기기 */
+.radio-group input[type='radio'] {
+  display: none;
 }
 
 .radio-group span {
-    padding: 8px 16px;
-    border: 2px solid #ddd;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.3s;
+  padding: 8px 16px;
+  border: 2px solid #ddd;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s;
 }
 
-/* 선택됐을 때 스타일 */
-.radio-group input[type="radio"]:checked + span {
-    background-color: #667eea;
-    color: white;
-    border-color: #667eea;
+.radio-group input[type='radio']:checked + span {
+  background-color: #667eea;
+  color: white;
+  border-color: #667eea;
 }
 
 .radio-group label:hover span {
-    border-color: #764ba2;
+  border-color: #764ba2;
 }
 
 .search-section {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .input-group {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
 #locationInput {
-    flex: 1;
-    padding: 12px 15px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: border-color 0.3s;
+  flex: 1;
+  padding: 12px 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s;
 }
 
 #locationInput:focus {
-    outline: none;
-    border-color: #667eea;
+  outline: none;
+  border-color: #667eea;
 }
 
 #searchBtn {
-    padding: 12px 25px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: transform 0.2s;
+  padding: 12px 25px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
 #searchBtn:hover {
-    transform: translateY(-2px);
+  transform: translateY(-2px);
 }
 
 .search-results {
-    max-height: 200px;
-    overflow-y: auto;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    display: none;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  display: none;
 }
 
 .search-result-item {
-    padding: 12px 15px;
-    border-bottom: 1px solid #eee;
-    cursor: pointer;
-    transition: background-color 0.2s;
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .search-result-item:hover {
-    background-color: #f8f9fa;
+  background-color: #f8f9fa;
 }
 
 .search-result-item:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .range-section {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .range-section label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 600;
-    color: #555;
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #555;
 }
 
 #rangeSlider {
-    width: 100%;
-    height: 8px;
-    border-radius: 4px;
-    background: #ddd;
-    outline: none;
-    -webkit-appearance: none;
-    appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #ddd;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 #rangeSlider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #667eea;
-    cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #667eea;
+  cursor: pointer;
 }
 
 #rangeSlider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #667eea;
-    cursor: pointer;
-    border: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #667eea;
+  cursor: pointer;
+  border: none;
 }
 
 .info-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .shelter-count {
-    font-weight: 600;
-    color: #667eea;
-    font-size: 1.1em;
+  font-weight: 600;
+  color: #667eea;
+  font-size: 1.1em;
 }
 
 .map-container {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 #map {
-    width: 100%;
-    height: 500px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  width: 100%;
+  height: 500px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
 .shelter-list {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
 .shelter-list h3 {
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.5em;
 }
 
 .shelter-item {
-    padding: 15px;
-    border: 1px solid #eee;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    transition: all 0.3s;
-    cursor: pointer;
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  transition: all 0.3s;
+  cursor: pointer;
 }
 
 .shelter-item:hover {
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
 }
 
 .shelter-name {
-    font-weight: 600;
-    font-size: 1.1em;
-    margin-bottom: 5px;
-    color: #333;
+  font-weight: 600;
+  font-size: 1.1em;
+  margin-bottom: 5px;
+  color: #333;
 }
 
 .shelter-address {
-    color: #666;
-    margin-bottom: 8px;
+  color: #666;
+  margin-bottom: 8px;
 }
 
 .shelter-info {
-    display: flex;
-    gap: 15px;
-    font-size: 0.9em;
+  display: flex;
+  gap: 15px;
+  font-size: 0.9em;
 }
 
 .shelter-type {
-    background: #e3f2fd;
-    color: #1976d2;
-    padding: 4px 8px;
-    border-radius: 4px;
-}
-
-.shelter-capacity {
-    background: #f3e5f5;
-    color: #7b1fa2;
-    padding: 4px 8px;
-    border-radius: 4px;
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
 
 .shelter-distance {
-    background: #e8f5e8;
-    color: #388e3c;
-    padding: 4px 8px;
-    border-radius: 4px;
+  background: #e8f5e8;
+  color: #388e3c;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
 
 @media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-    
-    header h1 {
-        font-size: 2em;
-    }
-    
-    .input-group {
-        flex-direction: column;
-    }
-    
-    #map {
-        height: 400px;
-    }
-    
-    .shelter-info {
-        flex-direction: column;
-        gap: 8px;
-    }
+  .container {
+    padding: 10px;
+  }
+
+  header h1 {
+    font-size: 2em;
+  }
+
+  .input-group {
+    flex-direction: column;
+  }
+
+  #map {
+    height: 400px;
+  }
+
+  .shelter-info {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* ======================================= */
+/* 카카오맵 정보창(InfoWindow) 커스텀 스타일 (최종 해결판) */
+/* ======================================= */
+
+.infowindow-content {
+  padding: 16px;
+  min-width: 260px;
+  max-width: 280px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.infowindow-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #333;
+}
+
+.infowindow-address {
+  margin: 0;
+  color: #555;
+  /* 이 속성이 진짜 해결책입니다. */
+  /* 컨테이너 너비를 초과하는 긴 단어(공백 없는)가 있을 경우, 자연스럽게 줄바꿈을 허용합니다. */
+  overflow-wrap: break-word;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.infowindow-details {
+  margin-top: 2px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.infowindow-tag {
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.infowindow-tag.type {
+  background-color: #f0f6ff;
+  color: #1976d2;
+  border: 1px solid #d4e5ff;
+}
+
+.infowindow-tag.distance {
+  background-color: #f1f8e9;
+  color: #388e3c;
+  border: 1px solid #dcedc8;
 }
