@@ -164,7 +164,7 @@ app.get('/api/search', async (req, res) => {
         query: query,
         x: 126.978, // 서울시청 기준
         y: 37.5665,
-        radius: 20000,
+        radius: 100000,
         size: 15,
       },
     });
