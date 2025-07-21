@@ -44,6 +44,84 @@ header p {
   margin-bottom: 20px;
 }
 
+/* 시뮬레이션 모드 스타일 */
+.simulation-mode-section {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.simulation-toggle {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.simulation-toggle label:first-child {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #333;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #667eea;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.simulation-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* 재난 선택 */
 .disaster-type-section {
   margin-bottom: 25px;
 }
@@ -88,17 +166,22 @@ header p {
   border-color: #764ba2;
 }
 
-.search-section {
+/* 검색 */
+.search-section,
+.simulation-inputs {
   margin-bottom: 20px;
+  position: relative;
 }
 
 .input-group {
   display: flex;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
-#locationInput {
+#locationInput,
+#startLocationInput,
+#disasterLocationInput {
   flex: 1;
   padding: 12px 15px;
   border: 2px solid #ddd;
@@ -107,12 +190,16 @@ header p {
   transition: border-color 0.3s;
 }
 
-#locationInput:focus {
+#locationInput:focus,
+#startLocationInput:focus,
+#disasterLocationInput:focus {
   outline: none;
   border-color: #667eea;
 }
 
-#searchBtn {
+#searchBtn,
+#startSearchBtn,
+#disasterSearchBtn {
   padding: 12px 25px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -123,16 +210,23 @@ header p {
   transition: transform 0.2s;
 }
 
-#searchBtn:hover {
+#searchBtn:hover,
+#startSearchBtn:hover,
+#disasterSearchBtn:hover {
   transform: translateY(-2px);
 }
 
 .search-results {
+  position: absolute;
+  width: 100%;
+  background: white;
+  z-index: 10;
   max-height: 200px;
   overflow-y: auto;
   border: 1px solid #eee;
   border-radius: 8px;
   display: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .search-result-item {
@@ -196,6 +290,23 @@ header p {
   align-items: center;
 }
 
+.reset-button {
+  padding: 8px 18px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.reset-button:hover {
+  background-color: #5a6268;
+  transform: translateY(-1px);
+}
+
 .shelter-count {
   font-weight: 600;
   color: #667eea;
@@ -203,6 +314,7 @@ header p {
 }
 
 .map-container {
+  position: relative;
   margin-bottom: 20px;
 }
 
@@ -224,6 +336,13 @@ header p {
   margin-bottom: 20px;
   color: #333;
   font-size: 1.5em;
+}
+
+/* 대피소 목록 컨테이너 */
+#shelterListContainer {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
 }
 
 .shelter-item {
@@ -295,14 +414,11 @@ header p {
   }
 }
 
-/* ======================================= */
-/* 카카오맵 정보창(InfoWindow) 커스텀 스타일 (최종 해결판) */
-/* ======================================= */
-
+/* InfoWindow */
 .infowindow-content {
-  padding: 16px;
-  min-width: 260px;
-  max-width: 280px;
+  padding: 18px;
+  min-width: 280px;
+  max-width: 320px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   display: flex;
@@ -312,7 +428,7 @@ header p {
 
 .infowindow-title {
   margin: 0;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   color: #333;
 }
@@ -320,16 +436,16 @@ header p {
 .infowindow-address {
   margin: 0;
   color: #555;
-  /* 이 속성이 진짜 해결책입니다. */
-  /* 컨테이너 너비를 초과하는 긴 단어(공백 없는)가 있을 경우, 자연스럽게 줄바꿈을 허용합니다. */
+  font-size: 13px;
   overflow-wrap: break-word;
-  padding-bottom: 10px;
+  padding-bottom: 8px;
   border-bottom: 1px solid #eee;
 }
 
 .infowindow-details {
-  margin-top: 2px;
+  margin-top: 4px;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   align-items: center;
 }
@@ -352,4 +468,67 @@ header p {
   background-color: #f1f8e9;
   color: #388e3c;
   border: 1px solid #dcedc8;
+}
+
+/* 재난 대처 요령 */
+.guide-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background-color: #ffc107;
+  color: #333;
+  border: 2px solid white;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 38px;
+  cursor: pointer;
+  z-index: 10; /* 지도 위에 표시되도록 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
+}
+
+.guide-button:hover {
+  transform: scale(1.1);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none; /* 평소에는 숨김 */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  position: relative;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #888;
+  cursor: pointer;
+}
+
+#guideImage {
+  max-width: 100%;
+  height: auto;
 }

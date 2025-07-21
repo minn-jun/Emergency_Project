@@ -14,6 +14,32 @@
       </header>
 
       <div class="controls">
+        <!-- 시뮬레이션 모드 페이지 -->
+        <div class="simulation-mode-section">
+          <div class="simulation-toggle">
+            <label for="simulationToggle">시뮬레이션</label>
+            <label class="switch">
+              <input type="checkbox" id="simulationToggle" />
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <div id="simulationInputs" class="simulation-inputs" style="display: none">
+            <div class="input-group">
+              <input type="text" id="startLocationInput" placeholder="현재 위치 입력 (예: 강남역)" />
+              <button id="startSearchBtn">검색</button>
+            </div>
+            <div id="startSearchResults" class="search-results"></div>
+
+            <div class="input-group">
+              <input type="text" id="disasterLocationInput" placeholder="재난 발생 위치 입력 (예: 잠실역)" />
+              <button id="disasterSearchBtn">검색</button>
+            </div>
+            <div id="disasterSearchResults" class="search-results"></div>
+          </div>
+        </div>
+
+        <!-- 재난 유형 선택 -->
         <div class="disaster-type-section">
           <h3>재난 유형 선택</h3>
           <div class="radio-group" id="disasterTypeGroup">
@@ -44,41 +70,29 @@
           </div>
         </div>
 
+        <!-- 기본 검색 페이지 -->
         <div class="search-section">
           <div class="input-group">
-            <input
-              type="text"
-              id="locationInput"
-              placeholder="위치를 입력하세요 (예: 명동, 홍대입구역)"
-            />
+            <input type="text" id="locationInput" placeholder="위치를 입력하세요 (예: 명동, 홍대입구역)" />
             <button id="searchBtn">검색</button>
           </div>
           <div id="searchResults" class="search-results"></div>
         </div>
 
         <div class="range-section">
-          <label for="rangeSlider"
-            >검색 범위: <span id="rangeValue">200</span>m</label
-          >
-          <input
-            type="range"
-            id="rangeSlider"
-            min="100"
-            max="1000"
-            value="200"
-            step="100"
-          />
+          <label for="rangeSlider">검색 범위: <span id="rangeValue">200</span>m</label>
+          <input type="range" id="rangeSlider" min="100" max="1000" value="200" step="100" />
         </div>
 
         <div class="info-section">
-          <div class="shelter-count">
-            찾은 대피소: <span id="shelterCount">0</span>개
-          </div>
+          <div class="shelter-count">찾은 대피소: <span id="shelterCount">0</span>개</div>
+          <button id="resetBtn" class="reset-button">초기화</button>
         </div>
       </div>
 
       <div class="map-container">
         <div id="map"></div>
+        <div id="guideBtn" class="guide-button">!</div>
       </div>
 
       <div class="shelter-list">
@@ -87,13 +101,17 @@
       </div>
     </div>
 
-    <!-- 카카오맵 API를 먼저 로드 -->
-    <script
-      type="text/javascript"
-      src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=7ce13f8147589ba5fcadecbc7a8eabe9&libraries=services&autoload=false"
-    ></script>
+    <div id="guideModal" class="modal-overlay">
+      <div class="modal-content">
+        <span class="modal-close-btn">x</span>
+        <img id="guideImage" src="" alt="재난 대처 요령" />
+      </div>
+    </div>
 
-    <!-- 그 다음에 실행 코드 -->
-    <script src="script.js"></script>
+    <!-- 카카오맵 API -->
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=7ce13f8147589ba5fcadecbc7a8eabe9&autoload=false"></script>
+
+    <script src="map.js"></script>
+    <script src="simulation.js"></script>
   </body>
 </html>

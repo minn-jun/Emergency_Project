@@ -29,18 +29,13 @@ function parseCSV(filePath) {
     const headerLine = lines[0].replace(/^\uFEFF/, '');
 
     // 각 헤더의 공백 제거
-    const headers = headerLine
-      .split(',')
-      .map((h) => h.trim().replace(/^"|"$/g, ''));
+    const headers = headerLine.split(',').map((h) => h.trim().replace(/^"|"$/g, ''));
 
     const latHeader = headers.find((h) => h.includes('위도'));
     const lonHeader = headers.find((h) => h.includes('경도'));
 
     if (!latHeader || !lonHeader) {
-      console.error(
-        "[오류] CSV 헤더에서 '위도' 또는 '경도'를 찾지 못했습니다.",
-        headers
-      );
+      console.error("[오류] CSV 헤더에서 '위도' 또는 '경도'를 찾지 못했습니다.", headers);
       return [];
     }
 
@@ -74,9 +69,7 @@ function parseCSV(filePath) {
     }
 
     // 파싱 결과 확인용 로그
-    console.log(
-      `[${path.basename(filePath)}] 파싱 완료. 총 ${result.length}개 데이터.`
-    );
+    console.log(`[${path.basename(filePath)}] 파싱 완료. 총 ${result.length}개 데이터.`);
     if (result.length > 0) {
       console.log('첫 번째 데이터 샘플:', {
         name: result[0]['대피소명'],
@@ -113,7 +106,7 @@ app.get('/api/shelters', (req, res) => {
       fileName = 'flood_shelters.csv';
       break;
     case 'attack':
-      fileName = 'civildef_sw_shelters.csv';
+      fileName = 'sw_shelters.csv';
       break;
     default:
       fileName = 'civildef_shelters.csv';
@@ -161,24 +154,20 @@ app.get('/api/search', async (req, res) => {
     }
 
     // KAKAO REST API KEY
-    const KAKAO_API_KEY =
-      process.env.KAKAO_API_KEY || 'cb2690da863c1d359f5ad5ea12c7d575';
+    const KAKAO_API_KEY = process.env.KAKAO_API_KEY || 'cb2690da863c1d359f5ad5ea12c7d575';
 
-    const response = await axios.get(
-      'https://dapi.kakao.com/v2/local/search/keyword.json',
-      {
-        headers: {
-          Authorization: `KakaoAK ${KAKAO_API_KEY}`,
-        },
-        params: {
-          query: query,
-          x: 126.978, // 서울시청 기준
-          y: 37.5665,
-          radius: 20000,
-          size: 15,
-        },
-      }
-    );
+    const response = await axios.get('https://dapi.kakao.com/v2/local/search/keyword.json', {
+      headers: {
+        Authorization: `KakaoAK ${KAKAO_API_KEY}`,
+      },
+      params: {
+        query: query,
+        x: 126.978, // 서울시청 기준
+        y: 37.5665,
+        radius: 20000,
+        size: 15,
+      },
+    });
 
     const places = response.data.documents.map((place) => ({
       place_name: place.place_name,
