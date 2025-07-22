@@ -4,7 +4,8 @@ window.isSimulationMode = false;
 let startLocationMarker = null; // 현재 위치 마커 (빨강)
 let disasterLocationMarker = null; // 재난 위치 마커 (보라)
 let startLocationCircle = null; // 현재 위치 반경 원 (1km, 파랑)
-let disasterLocationCircle = null; // 재난 위치 반경 원 (2km, 빨강)
+let disasterLocationCircle = null; // 재난 위치 반경 원 (3km, 빨강)
+let disasterRange = 600; // 재난 범위
 
 // 시뮬레이션 관련 지도 요소 초기화
 function resetSimulationElements() {
@@ -17,6 +18,13 @@ function resetSimulationElements() {
   disasterLocationMarker = null;
   startLocationCircle = null;
   disasterLocationCircle = null;
+
+  const disasterRangeSlider = document.getElementById('disasterRangeSlider');
+  if (disasterRangeSlider) {
+    disasterRange = 600;
+    disasterRangeSlider.value = 600;
+    document.getElementById('disasterRangeValue').textContent = 600;
+  }
 }
 
 // 시뮬레이션용 원 그리기
@@ -31,7 +39,7 @@ function drawSimulationCircles() {
       center: startLocationMarker.getPosition(),
       radius: currentRange,
       strokeWeight: 2,
-      strokeColor: '#007BFF', // 파란색
+      strokeColor: '#007BFF',
       strokeOpacity: 0.8,
       fillColor: '#007BFF',
       fillOpacity: 0.1,
@@ -43,9 +51,9 @@ function drawSimulationCircles() {
   if (disasterLocationMarker) {
     disasterLocationCircle = new kakao.maps.Circle({
       center: disasterLocationMarker.getPosition(),
-      radius: 2000, // 2km
+      radius: disasterRange,
       strokeWeight: 2,
-      strokeColor: '#DC3545', // 붉은색
+      strokeColor: '#DC3545',
       strokeOpacity: 0.8,
       fillColor: '#DC3545',
       fillOpacity: 0.15,
@@ -63,8 +71,8 @@ function selectSimulationLocation(location, type) {
     currentCenter = { lat: position.getLat(), lng: position.getLng() }; // 대피소 검색 기준점 변경
     if (startLocationMarker) startLocationMarker.setMap(null);
 
-    const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png';
-    markerImage = new kakao.maps.MarkerImage(imageSrc, new kakao.maps.Size(36, 40), { offset: new kakao.maps.Point(15, 39) });
+    const imageSrc = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+    markerImage = new kakao.maps.MarkerImage(imageSrc, new kakao.maps.Size(40, 40), { offset: new kakao.maps.Point(20, 40) });
     startLocationMarker = new kakao.maps.Marker({ position, image: markerImage, zIndex: 10 });
     startLocationMarker.setMap(map);
 
@@ -72,11 +80,10 @@ function selectSimulationLocation(location, type) {
     map.setCenter(position);
     updateShelterDisplay(); // '현재 위치'가 바뀌었으므로 대피소 목록 갱신
   } else {
-    // 'disaster'
     if (disasterLocationMarker) disasterLocationMarker.setMap(null);
 
     const imageSrc = 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png';
-    markerImage = new kakao.maps.MarkerImage(imageSrc, new kakao.maps.Size(40, 40), { offset: new kakao.maps.Point(16, 32), zIndex: 10 });
+    markerImage = new kakao.maps.MarkerImage(imageSrc, new kakao.maps.Size(40, 40), { offset: new kakao.maps.Point(20, 40), zIndex: 10 });
     disasterLocationMarker = new kakao.maps.Marker({ position, image: markerImage });
     disasterLocationMarker.setMap(map);
 
@@ -93,7 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const defaultInput = document.getElementById('locationInput');
   const defaultBtn = document.getElementById('searchBtn');
-  const rangeSlider = document.getElementById('rangeSlider');
+
+  const disasterRangeSlider = document.getElementById('disasterRangeSlider');
+  const disasterRangeValue = document.getElementById('disasterRangeValue');
+
+  const heatwaveRadio = document.querySelector('input[name="disasterType"][value="heatwave"]');
+  const coldwaveRadio = document.querySelector('input[name="disasterType"][value="coldwave"]');
+  const defaultRadio = document.querySelector('input[name="disasterType"][value="default"]');
 
   // 모드 전환
   simulationToggle.addEventListener('change', (e) => {
@@ -107,15 +120,38 @@ document.addEventListener('DOMContentLoaded', () => {
       defaultSearch.style.display = 'none';
       defaultInput.disabled = true;
       defaultBtn.disabled = true;
+
+      // 폭염, 한파 비활성화
+      heatwaveRadio.disabled = true;
+      coldwaveRadio.disabled = true;
+      heatwaveRadio.parentElement.classList.add('disabled');
+      coldwaveRadio.parentElement.classList.add('disabled');
+
+      if (heatwaveRadio.checked || coldwaveRadio.checked) {
+        defaultRadio.checked = true;
+        currentDisasterType = 'default';
+        loadShelterData(currentDisasterType);
+      }
     } else {
       simInputs.style.display = 'none';
       defaultSearch.style.display = 'block';
       defaultInput.disabled = false;
       defaultBtn.disabled = false;
 
+      heatwaveRadio.disabled = false;
+      coldwaveRadio.disabled = false;
+      heatwaveRadio.parentElement.classList.remove('disabled');
+      coldwaveRadio.parentElement.classList.remove('disabled');
+
       showRangeCircle();
       updateShelterDisplay();
     }
+  });
+
+  disasterRangeSlider.addEventListener('input', (e) => {
+    disasterRange = parseInt(e.target.value);
+    disasterRangeValue.textContent = disasterRange;
+    drawSimulationCircles();
   });
 
   // 시뮬레이션용 검색창 처리

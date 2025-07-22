@@ -36,9 +36,9 @@ async function loadShelterData(type) {
     shelterData = await response.json();
     // 현재 모드에 따라 화면 업데이트
     if (window.isSimulationMode) {
-      updateShelterDisplay(); // 시뮬레이션 모드일 경우 대피소만 업데이트
+      updateShelterDisplay();
     } else {
-      updateShelterDisplay(); // 일반 모드 업데이트
+      updateShelterDisplay();
     }
   } catch (error) {
     console.error('대피소 데이터 로드 실패:', error);
@@ -107,28 +107,37 @@ function clearShelterMarkers() {
 // 대피소 마커 생성
 function createShelterMarker(shelter, distance) {
   const position = new kakao.maps.LatLng(shelter.latitude, shelter.longitude);
-  // 마커 zIndex 제거 (단순 마커에는 불필요)
   const marker = new kakao.maps.Marker({ position, map });
 
-  // 인포윈도우 내용에서 '소요시간' 제거
+  const startLat = parseFloat(currentCenter.lat);
+  const startLng = parseFloat(currentCenter.lng);
+  const endLat = parseFloat(shelter.latitude);
+  const endLng = parseFloat(shelter.longitude);
+
+  const routeUrl = `http://m.map.kakao.com/scheme/route?sp=${startLat},${startLng}&ep=${endLat},${endLng}&by=foot`;
+  console.log(routeUrl);
+
   const infoContent = `
     <div class="infowindow-content">
       <h4 class="infowindow-title">${shelter.name}</h4>
       <p class="infowindow-address">${shelter.address}</p>
       <div class="infowindow-details">
         <span class="infowindow-tag type">${shelter.type}</span>
-        <span class="infowindow-tag distance">거리: ${Math.round(distance)}m</span>
+        <span class="infowindow-tag distance">직선거리: ${Math.round(distance)}m</span>
       </div>
+      <a href="${routeUrl}" target="_blank" title="카카오맵 길찾기 새창열림" style="display: block; margin-top: 10px; padding: 8px; background-color: #FAE100; color: #3C1E1E; text-decoration: none; border-radius: 5px; text-align: center; font-weight: bold; font-size: 14px;">
+        🚶  카카오맵 도보 길찾기
+      </a>
     </div>
   `;
 
   const infoWindow = new kakao.maps.InfoWindow({
     content: infoContent,
     disableAutoPan: true,
-    zIndex: 1,
+    zIndex: 11,
   });
 
-  kakao.maps.event.addListener(marker, 'click', () => {
+  kakao.maps.event.addListener(marker, 'click', async () => {
     if (openedInfoWindow) openedInfoWindow.close();
     infoWindow.open(map, marker);
     openedInfoWindow = infoWindow;
@@ -148,9 +157,20 @@ function updateShelterList(shelters) {
   }
 
   shelters.sort((a, b) => {
-    const distA = calculateDistance(currentCenter.lat, currentCenter.lng, a.latitude, a.longitude);
-    const distB = calculateDistance(currentCenter.lat, currentCenter.lng, b.latitude, b.longitude);
-    return distA - distB;
+    if (window.isSimulationMode && disasterLocationMarker) {
+      const disasterPosition = disasterLocationMarker.getPosition();
+      const disasterLat = disasterPosition.getLat();
+      const disasterLng = disasterPosition.getLng();
+
+      const distA = calculateDistance(disasterLat, disasterLng, a.latitude, a.longitude);
+      const distB = calculateDistance(disasterLat, disasterLng, b.latitude, b.longitude);
+
+      return distB - distA;
+    } else {
+      const distA = calculateDistance(currentCenter.lat, currentCenter.lng, a.latitude, a.longitude);
+      const distB = calculateDistance(currentCenter.lat, currentCenter.lng, b.latitude, b.longitude);
+      return distA - distB;
+    }
   });
 
   shelters.forEach((shelter) => {
@@ -211,7 +231,7 @@ function updateShelterDisplay() {
 
   let sheltersToDisplay = filterSheltersInRange();
 
-  // 시뮬레이션 모드가 아닐 때만 가장 가까운 대피소 찾기 로직 실행
+  // 시뮬레이션 모드가 아닐 때 가장 가까운 대피소 찾기
   if (!window.isSimulationMode && sheltersToDisplay.length === 0) {
     const closestShelter = findClosestShelter();
     if (closestShelter) sheltersToDisplay = [closestShelter];
@@ -226,7 +246,7 @@ function updateShelterDisplay() {
   document.getElementById('shelterCount').textContent = sheltersToDisplay.length;
 }
 
-// 위치 검색 API 호출 (공용 함수)
+// 위치 검색 API 호출
 async function searchLocationAPI(query) {
   try {
     const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
@@ -260,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadShelterData(currentDisasterType);
   });
 
-  // 일반 검색 버튼 및 엔터 키
+  // 일반 검색
   const locationInput = document.getElementById('locationInput');
   const searchBtn = document.getElementById('searchBtn');
   const searchResultsContainer = document.getElementById('searchResults');
@@ -302,8 +322,9 @@ document.addEventListener('DOMContentLoaded', () => {
     currentCenter = { lat: parseFloat(location.y), lng: parseFloat(location.x) };
     if (searchLocationMarker) searchLocationMarker.setMap(null);
 
-    const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png';
-    const markerImage = new kakao.maps.MarkerImage(imageSrc, new kakao.maps.Size(36, 40), { offset: new kakao.maps.Point(15, 39) });
+    const imageSrc = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+    const imageOption = { offset: new kakao.maps.Point(20, 40) };
+    const markerImage = new kakao.maps.MarkerImage(imageSrc, new kakao.maps.Size(40, 40), imageOption);
     const markerPosition = new kakao.maps.LatLng(currentCenter.lat, currentCenter.lng);
 
     searchLocationMarker = new kakao.maps.Marker({ position: markerPosition, image: markerImage });
@@ -318,10 +339,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // 초기화 버튼
   document.getElementById('resetBtn').addEventListener('click', () => {
     if (window.isSimulationMode) {
-      resetApplicationState(); // 시뮬레이션 모드는 그냥 비운 상태로 둡니다.
+      resetApplicationState();
     } else {
       resetApplicationState();
-      showRangeCircle(); // 일반 모드는 기본 원과 대피소를 다시 보여줍니다.
+      showRangeCircle();
       updateShelterDisplay();
     }
   });

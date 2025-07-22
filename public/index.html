@@ -36,6 +36,11 @@
               <button id="disasterSearchBtn">검색</button>
             </div>
             <div id="disasterSearchResults" class="search-results"></div>
+
+            <div class="range-section">
+              <label for="disasterRangeSlider">재난 범위: <span id="disasterRangeValue">600</span>m</label>
+              <input type="range" id="disasterRangeSlider" min="600" max="3000" value="600" step="200" />
+            </div>
           </div>
         </div>
 
@@ -71,7 +76,7 @@
         </div>
 
         <!-- 기본 검색 페이지 -->
-        <div class="search-section">
+        <div id="defaultSearchSection" class="search-section">
           <div class="input-group">
             <input type="text" id="locationInput" placeholder="위치를 입력하세요 (예: 명동, 홍대입구역)" />
             <button id="searchBtn">검색</button>
@@ -79,9 +84,9 @@
           <div id="searchResults" class="search-results"></div>
         </div>
 
-        <div class="range-section">
+        <div id="defaultRangeSection" class="range-section">
           <label for="rangeSlider">검색 범위: <span id="rangeValue">200</span>m</label>
-          <input type="range" id="rangeSlider" min="100" max="100000" value="200" step="100" />
+          <input type="range" id="rangeSlider" min="100" max="1000" value="200" step="100" />
         </div>
 
         <div class="info-section">

@@ -20,7 +20,7 @@ function parseCSV(filePath) {
     const data = fs.readFileSync(filePath, 'utf8');
 
     // 파일을 읽은 후, 앞/뒤 공백을 제거하고 줄바꿈 문자를 정규식으로 처리
-    // 이렇게 하면 다양한 OS(Windows, Mac)의 줄바꿈 형식과 파일 끝의 불필요한 공백에 모두 대응 가능
+    // 다양한 OS(Windows, Mac)의 줄바꿈 형식과 파일 끝의 불필요한 공백에 모두 대응 가능
     const lines = data.trim().split(/\r?\n/);
 
     if (lines.length < 2) return []; // 헤더만 있거나 비어있는 경우
@@ -106,7 +106,7 @@ app.get('/api/shelters', (req, res) => {
       fileName = 'flood_shelters.csv';
       break;
     case 'attack':
-      fileName = 'sw_shelters.csv';
+      fileName = 'civildef_sw_shelters.csv';
       break;
     default:
       fileName = 'civildef_shelters.csv';
@@ -145,7 +145,7 @@ app.get('/api/shelters', (req, res) => {
   }
 });
 
-// 위치 검색 API (카카오 API 사용)
+// 위치 검색 API (카카오 API)
 app.get('/api/search', async (req, res) => {
   try {
     const query = req.query.q;
@@ -164,7 +164,7 @@ app.get('/api/search', async (req, res) => {
         query: query,
         x: 126.978, // 서울시청 기준
         y: 37.5665,
-        radius: 100000,
+        radius: 20000,
         size: 15,
       },
     });
