@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
 import json
 import time
 
@@ -20,6 +21,14 @@ try:
     url = "https://www.safekorea.go.kr/idsiSFK/neo/sfk/cs/sfc/dis/disasterMsgList.jsp?menuSeq=679"
     driver.get(url)
     time.sleep(2)  # JS 데이터 로딩 대기
+    
+    region_select = Select(driver.find_element(By.ID, "sbLawArea1"))
+    region_select.select_by_visible_text("서울특별시")
+    time.sleep(1)  # 변경 후 테이블 재로딩 시간 대기
+    
+    search_button = driver.find_element(By.CLASS_NAME, "search_btn")
+    search_button.click()
+    time.sleep(3)  # 페이지 로딩 대기 (검색 결과가 나타날 때까지)
 
     # 테이블에서 행(tr) 가져오기
     rows = driver.find_elements(By.CSS_SELECTOR, ".boardList_table tbody tr")
