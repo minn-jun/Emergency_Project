@@ -39,7 +39,7 @@
 
             <div class="range-section">
               <label for="disasterRangeSlider">재난 범위: <span id="disasterRangeValue">600</span>m</label>
-              <input type="range" id="disasterRangeSlider" min="600" max="3000" value="600" step="200" />
+              <input type="range" id="disasterRangeSlider" min="200" max="3000" value="600" step="200" />
             </div>
           </div>
         </div>
@@ -80,6 +80,7 @@
           <div class="input-group">
             <input type="text" id="locationInput" placeholder="위치를 입력하세요 (예: 명동, 홍대입구역)" />
             <button id="searchBtn">검색</button>
+            <button id="currentLocationBtn" class="location-btn" title="현재 위치로 찾기">📍</button>
           </div>
           <div id="searchResults" class="search-results"></div>
         </div>
@@ -118,5 +119,6 @@
 
     <script src="map.js"></script>
     <script src="simulation.js"></script>
+    <script src="disaster-alert.js"></script>
   </body>
 </html>

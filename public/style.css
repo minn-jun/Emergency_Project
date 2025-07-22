@@ -549,3 +549,19 @@ input:checked + .slider:before {
   max-width: 100%;
   height: auto;
 }
+
+/* 현재 위치 버튼 */
+.location-btn {
+  padding: 0 15px;
+  font-size: 1.2em;
+  background-color: #f8f9fa;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.location-btn:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+}

@@ -5,7 +5,7 @@ let startLocationMarker = null; // 현재 위치 마커 (빨강)
 let disasterLocationMarker = null; // 재난 위치 마커 (보라)
 let startLocationCircle = null; // 현재 위치 반경 원 (1km, 파랑)
 let disasterLocationCircle = null; // 재난 위치 반경 원 (3km, 빨강)
-let disasterRange = 600; // 재난 범위
+let disasterRange = 200; // 재난 범위
 
 // 시뮬레이션 관련 지도 요소 초기화
 function resetSimulationElements() {
@@ -21,9 +21,9 @@ function resetSimulationElements() {
 
   const disasterRangeSlider = document.getElementById('disasterRangeSlider');
   if (disasterRangeSlider) {
-    disasterRange = 600;
-    disasterRangeSlider.value = 600;
-    document.getElementById('disasterRangeValue').textContent = 600;
+    disasterRange = 200;
+    disasterRangeSlider.value = 200;
+    document.getElementById('disasterRangeValue').textContent = 200;
   }
 }
 

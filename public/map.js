@@ -274,6 +274,60 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
+  const currentLocationBtn = document.getElementById('currentLocationBtn');
+  currentLocationBtn.addEventListener('click', () => {
+    // 브라우저가 Geolocation API를 지원하는지 확인
+    if (navigator.geolocation) {
+      // 현재 위치 요청
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          // 성공 콜백
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+
+          const locationData = {
+            place_name: '현재 위치',
+            y: lat,
+            x: lng,
+          };
+
+          selectDefaultLocation(locationData);
+          document.getElementById('searchResults').style.display = 'none';
+
+          console.log(`GPS 위치 확인: 위도 ${lat}, 경도 ${lng}`);
+        },
+        (error) => {
+          // 실패 콜백
+          let errorMessage = '위치 정보를 가져오는 데 실패했습니다. ';
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage += '위치 정보 접근 권한이 거부되었습니다.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage += '사용할 수 없는 위치 정보입니다.';
+              break;
+            case error.TIMEOUT:
+              errorMessage += '요청 시간이 초과되었습니다.';
+              break;
+            default:
+              errorMessage += '알 수 없는 오류가 발생했습니다.';
+              break;
+          }
+          console.error(errorMessage, error);
+          alert(errorMessage);
+        },
+        {
+          enableHighAccuracy: true, // 높은 정확도 사용
+          timeout: 10000, // 10초 후 타임아웃
+          maximumAge: 0, // 캐시된 위치 사용 안함
+        }
+      );
+    } else {
+      // API를 지원하지 않는 브라우저
+      alert('이 브라우저에서는 현재 위치 찾기를 지원하지 않습니다.');
+    }
+  });
+
   // 재난 유형 변경
   document.getElementById('disasterTypeGroup').addEventListener('change', (e) => {
     currentDisasterType = e.target.value;
