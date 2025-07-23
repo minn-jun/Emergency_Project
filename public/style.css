@@ -565,3 +565,37 @@ input:checked + .slider:before {
   background-color: #e9ecef;
   border-color: #adb5bd;
 }
+
+/* 재난 문자 알림 */
+#disasterAlertModal h3 {
+  font-size: 1.5em;
+  color: #d32f2f; /* 붉은색 강조 */
+  margin-bottom: 15px;
+  text-align: center;
+  border-bottom: 2px solid #f1f1f1;
+  padding-bottom: 10px;
+}
+
+.disaster-alert-details {
+  font-size: 1em;
+  line-height: 1.7;
+}
+
+.disaster-alert-details p {
+  margin-bottom: 10px;
+}
+
+.disaster-alert-details strong {
+  display: inline-block;
+  width: 80px; /* 라벨 너비 고정 */
+  color: #555;
+}
+
+.disaster-alert-details .content {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #fffbe6; /* 내용 강조 배경 */
+  border-radius: 8px;
+  border: 1px solid #ffe58f;
+  font-weight: 500;
+}

@@ -109,7 +109,7 @@
 
     <div id="guideModal" class="modal-overlay">
       <div class="modal-content">
-        <span class="modal-close-btn">x</span>
+        <span id="guideModalCloseBtn" class="modal-close-btn">x</span>
         <img id="guideImage" src="" alt="재난 대처 요령" />
       </div>
     </div>
@@ -120,5 +120,16 @@
     <script src="map.js"></script>
     <script src="simulation.js"></script>
     <script src="disaster-alert.js"></script>
+
+    <!-- 재난 문자 알림 -->
+    <div id="disasterAlertModal" class="modal-overlay">
+      <div class="modal-content">
+        <span id="disasterAlertCloseBtn" class="modal-close-btn">x</span>
+        <h3>🚨 긴급 재난 문자</h3>
+        <div id="disasterAlertContent" class="disaster-alert-details">
+          <!-- JS로 내용 채움 -->
+        </div>
+      </div>
+    </div>
   </body>
 </html>

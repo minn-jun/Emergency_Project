@@ -6,8 +6,29 @@ const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(express.json());
+
 // 정적 파일 제공
 app.use(express.static(path.join(__dirname, 'public')));
+
+let latestDisasterMsg = null;
+
+// Python 크롤러로부터 메시지 수신
+app.post('/api/disaster-update', (req, res) => {
+  const newDisasterMsg = req.body;
+  console.log('새로운 재난 문자 수신:', newDisasterMsg);
+
+  latestDisasterMsg = newDisasterMsg;
+  res.status(200).json({ status: 'success', message: 'Data received' });
+});
+
+app.get('/api/get-latest-disaster', (req, res) => {
+  if (latestDisasterMsg) {
+    res.json(latestDisasterMsg);
+  } else {
+    res.json(null);
+  }
+});
 
 // CSV 파일 읽기 및 파싱
 function parseCSV(filePath) {
@@ -183,42 +204,6 @@ app.get('/api/search', async (req, res) => {
     res.status(500).json({ error: '위치 검색에 실패했습니다.' });
   }
 });
-
-// // 재난문자 API
-// app.get('/api/latest-disaster-text', async (req, res) => {
-//   try {
-//     const SERVICE_KEY = 'W67KG652H799MHRK';
-//     const apiUrl = 'https://www.safetydata.go.kr/openApi/api/disasterMsgList/get.do';
-
-//     const response = await axios.get(apiUrl, {
-//       params: {
-//         serviceKey: SERVICE_KEY,
-//         pageNo: 1,
-//         numOfRows: 1,
-//         returnType: 'json',
-//       },
-//     });
-
-//     if (response.data && response.data.disasterMsgList) {
-//       const messages = response.data.disasterMsgList;
-//       if (messages.length > 0) {
-//         res.json({
-//           msgId: messages[0].msg_cn,
-//           content: messages[0].msg_cn,
-//           createDate: messages[0].create_date,
-//         });
-//       } else {
-//         res.json({ msgId: null, content: '새로운 재난문자가 없습니다.' });
-//       }
-//     } else {
-//       console.error('재난 문자 API 응답 형식 오류:', response.data);
-//       res.status(500).json({ error: 'API 응답 데이터를 파싱할 수 없습니다.' });
-//     }
-//   } catch (error) {
-//     console.error('재난 문자 API 호출 실패:', error);
-//     res.status(500).json({ error: '재난 문자 정보를 가져오는 데 실패했습니다.' });
-//   }
-// });
 
 // 루트 경로
 app.get('/', (req, res) => {

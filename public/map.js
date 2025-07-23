@@ -10,6 +10,7 @@ let rangeCircle;
 let currentDisasterType = 'default'; // 현재 선택된 재난유형
 let openedInfoWindow = null; // 열려있는 인포윈도우 추적
 let searchLocationMarker = null;
+let isMapReady = false; // 플래그
 
 // 지도 초기화
 function initMap() {
@@ -260,7 +261,16 @@ async function searchLocationAPI(query) {
 // DOM 로드 후 실행
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof kakao !== 'undefined' && kakao.maps && kakao.maps.load) {
-    kakao.maps.load(() => initMap());
+    kakao.maps.load(() => {
+      initMap();
+
+      isMapReady = true;
+      console.log('카카오맵 라이브러리 및 지도 초기화 완료.');
+
+      if (typeof checkForDisasterAlerts === 'function') {
+        checkForDisasterAlerts();
+      }
+    });
   } else {
     console.error('카카오맵 API 로드 실패');
     document.getElementById('map').innerHTML = `
@@ -428,7 +438,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const guideBtn = document.getElementById('guideBtn');
   const modal = document.getElementById('guideModal');
-  const closeBtn = document.querySelector('.modal-close-btn');
   const guideImage = document.getElementById('guideImage');
 
   guideBtn.addEventListener('click', () => {
@@ -441,13 +450,9 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.style.display = 'flex';
   });
 
-  closeBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
-
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.style.display = 'none';
+  guideModal.addEventListener('click', (e) => {
+    if (e.target.id === 'guideModalCloseBtn' || e.target === guideModal) {
+      guideModal.style.display = 'none';
     }
   });
 });
