@@ -47,13 +47,13 @@ function processDisasterAlert(data) {
         document.getElementById('rangeValue').textContent = maxRange;
 
         console.log(`광역 재난(${matchedType}) 감지. 검색 범위를 최댓값(${maxRange}m)으로 자동 확장합니다.`);
-      }
 
-      if (isMapReady && typeof showRangeCircle === 'function' && typeof updateShelterDisplay === 'function') {
-        showRangeCircle();
-        updateShelterDisplay();
-      } else {
-        console.warn('지도 라이브러리가 아직 준비되지 않아, 지도 업데이트를 건너뜁니다.');
+        if (isMapReady && typeof showRangeCircle === 'function' && typeof updateShelterDisplay === 'function') {
+          showRangeCircle();
+          updateShelterDisplay();
+        } else {
+          console.warn('지도 라이브러리가 아직 준비되지 않아, 지도 업데이트를 건너뜁니다.');
+        }
       }
     }
   } else {

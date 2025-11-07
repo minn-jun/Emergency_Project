@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
@@ -13,8 +14,8 @@ options.add_argument("--headless=new")
 options.add_argument("--disable-gpu")
 options.add_argument("--no-sandbox")
 
-# 크롬 드라이버 경로 설정
-service = Service("C:/chromedriver/chromedriver.exe")
+# 크롬 드라이버 자동 설치
+service = Service(ChromeDriverManager().install())
 
 SERVER_URL = "http://localhost:3000/api/disaster-update"
 
@@ -26,13 +27,13 @@ def crawling_send_disaster_msg():
     driver.get(url)
     time.sleep(2)  # JS 데이터 로딩 대기
 
-    # region_select = Select(driver.find_element(By.ID, "sbLawArea1"))
-    # region_select.select_by_visible_text("서울특별시")
-    # time.sleep(1)  # 변경 후 테이블 재로딩 시간 대기
+    region_select = Select(driver.find_element(By.ID, "sbLawArea1"))
+    region_select.select_by_visible_text("서울특별시")
+    time.sleep(1)  # 변경 후 테이블 재로딩 시간 대기
     
-    # search_button = driver.find_element(By.CLASS_NAME, "search_btn")
-    # search_button.click()
-    # time.sleep(3)  # 페이지 로딩 대기
+    search_button = driver.find_element(By.CLASS_NAME, "search_btn")
+    search_button.click()
+    time.sleep(3)  # 페이지 로딩 대기
 
     # 테이블에서 행(tr) 가져오기
     rows = driver.find_elements(By.CSS_SELECTOR, ".boardList_table tbody tr")
@@ -75,5 +76,5 @@ def crawling_send_disaster_msg():
 if __name__ == "__main__":
     while True:
         crawling_send_disaster_msg()
-        print("\n... 2분 후 다음 크롤링 시작 ...\n")
+        print("\n... 1분 후 다음 크롤링 시작 ...\n")
         time.sleep(60)
