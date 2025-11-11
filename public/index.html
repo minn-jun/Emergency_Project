@@ -11,10 +11,10 @@
       <header>
         <h1>🏠 대피소 찾기</h1>
         <p>주변 대피소를 쉽게 찾아보세요</p>
+        <a href="/admin" class="admin-link">관리자</a>
       </header>
 
       <div class="controls">
-        <!-- 시뮬레이션 모드 페이지 -->
         <div class="simulation-mode-section">
           <div class="simulation-toggle">
             <label for="simulationToggle">시뮬레이션</label>
@@ -23,7 +23,6 @@
               <span class="slider round"></span>
             </label>
           </div>
-
           <div id="simulationInputs" class="simulation-inputs" style="display: none">
             <div class="input-group">
               <input type="text" id="startLocationInput" placeholder="현재 위치 입력 (예: 강남역)" />
@@ -44,7 +43,6 @@
           </div>
         </div>
 
-        <!-- 재난 유형 선택 -->
         <div class="disaster-type-section">
           <h3>재난 유형 선택</h3>
           <div class="radio-group" id="disasterTypeGroup">
@@ -55,10 +53,6 @@
             <label>
               <input type="radio" name="disasterType" value="earthquake" />
               <span>지진</span>
-            </label>
-            <label>
-              <input type="radio" name="disasterType" value="flood" />
-              <span>태풍/홍수</span>
             </label>
             <label>
               <input type="radio" name="disasterType" value="heatwave" />
@@ -75,7 +69,8 @@
           </div>
         </div>
 
-        <!-- 기본 검색 페이지 -->
+        <hr class="controls-divider" />
+
         <div id="defaultSearchSection" class="search-section">
           <div class="input-group">
             <input type="text" id="locationInput" placeholder="위치를 입력하세요 (예: 명동, 홍대입구역)" />
@@ -106,7 +101,6 @@
         <div id="shelterListContainer"></div>
       </div>
     </div>
-
     <div id="guideModal" class="modal-overlay">
       <div class="modal-content">
         <span id="guideModalCloseBtn" class="modal-close-btn">x</span>

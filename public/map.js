@@ -121,7 +121,7 @@ function createShelterMarker(shelter, distance) {
   const infoContent = `
     <div class="infowindow-content">
       <h4 class="infowindow-title">${shelter.name}</h4>
-      <p class="infowindow-address">${shelter.address}</p>
+      <p class="infowindow-address">${shelter.address || ''}</p>
       <div class="infowindow-details">
         <span class="infowindow-tag type">${shelter.type}</span>
         <span class="infowindow-tag distance">직선거리: ${Math.round(distance)}m</span>
@@ -180,7 +180,7 @@ function updateShelterList(shelters) {
     shelterItem.className = 'shelter-item';
     shelterItem.innerHTML = `
       <div class="shelter-name">${shelter.name}</div>
-      <div class="shelter-address">${shelter.address}</div>
+      <div class="shelter-address">${shelter.address || ''}</div>
       <div class="shelter-info">
         <span class="shelter-type">${shelter.type}</span>
         <span class="shelter-distance">거리: ${Math.round(distance)}m</span>

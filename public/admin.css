@@ -1,0 +1,298 @@
+/* admin.css - 관리자 페이지 전용 스타일 */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #343a40;
+  margin: 0;
+}
+
+/* =========================================
+   로그인 페이지 (admin-login.html) 스타일
+   ========================================= */
+
+body.admin-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-box {
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.login-box h2 {
+  margin-top: 0;
+  margin-bottom: 25px;
+  text-align: center;
+  color: #343a40;
+}
+
+.login-form .form-group {
+  margin-bottom: 20px;
+}
+.login-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #495057;
+}
+
+/* ================================================
+   [공통] 모든 input, select, button 스타일
+   ================================================ */
+
+.login-form input,
+.login-form button,
+.admin-controls input,
+.admin-controls select,
+.admin-controls button {
+  width: 100%;
+  padding: 0 15px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  height: 40px;
+  line-height: 40px;
+}
+
+.admin-controls select {
+  padding: 10px 15px;
+  line-height: normal;
+}
+
+.login-form input:focus,
+.admin-controls input:focus,
+.admin-controls select:focus {
+  outline: none;
+  border-color: #5a67d8;
+  box-shadow: 0 0 0 2px rgba(90, 103, 216, 0.2);
+}
+
+.login-form button,
+.admin-controls button {
+  background-color: #5a67d8;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 15px;
+}
+.login-form button:hover,
+.admin-controls button:hover {
+  filter: brightness(1.1);
+}
+
+/* =========================================
+   관리자 대시보드 (admin.html) 스타일
+   ========================================= */
+.admin-container {
+  width: 95%;
+  max-width: 1800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #f1f3f5;
+}
+
+.admin-header h1 {
+  margin: 0;
+  color: #343a40;
+}
+
+.admin-header a,
+.admin-header button {
+  text-decoration: none;
+  padding: 0 16px;
+  height: 38px;
+  line-height: 38px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.2s;
+  font-size: 14px;
+  box-sizing: border-box;
+  display: inline-block;
+  text-align: center;
+}
+
+.admin-header a {
+  background-color: #5a67d8;
+  color: white;
+}
+
+.admin-header button#logoutBtn {
+  background-color: #f1f3f5;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+.admin-header a:hover,
+.admin-header button#logoutBtn:hover {
+  filter: brightness(1.1);
+}
+
+.admin-controls {
+  margin-bottom: 25px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.admin-controls h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 350px 150px;
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.form-grid.add-form {
+  grid-template-columns: 2.5fr 3fr 1fr 1fr 1.5fr 150px;
+}
+
+.form-grid label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #495057;
+}
+
+/* 테이블 레이아웃 */
+.admin-table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border: 1px solid #f1f3f5;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #dee2e6;
+  /* [수정] 상하 정렬을 'top'에서 'middle'로 변경 */
+  vertical-align: middle;
+  word-wrap: break-word;
+  border-right: 1px solid #f1f3f5;
+}
+
+.admin-table th:first-child,
+.admin-table td:first-child {
+  border-left: 1px solid #f1f3f5;
+}
+.admin-table th:last-child,
+.admin-table td:last-child {
+  border-right: 1px solid #f1f3f5;
+}
+
+.admin-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  text-align: center; /* 모든 헤더 중앙 정렬 */
+}
+
+.admin-table td {
+  text-align: left; /* 기본값: 데이터 왼쪽 정렬 */
+}
+
+/* [수정] ID, 타입, 관리 '데이터(td)'를 중앙 정렬합니다. */
+.admin-table td:nth-child(1),  /* ID 데이터 */
+.admin-table td:nth-child(4),  /* 타입 데이터 */
+.admin-table td:nth-child(5) {
+  /* 관리 데이터 (삭제 버튼) */
+  text-align: center;
+}
+
+/* 테이블 칼럼 너비 고정 */
+.admin-table th:nth-child(1) {
+  width: 6%;
+} /* ID */
+.admin-table th:nth-child(2) {
+  width: 27%;
+} /* 이름 */
+.admin-table th:nth-child(3) {
+  width: 40%;
+} /* 주소 */
+.admin-table th:nth-child(4) {
+  width: 17%;
+} /* 타입 */
+.admin-table th:nth-child(5) {
+  width: 10%;
+} /* 관리 */
+
+/* 삭제 버튼 */
+button.delete-btn {
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #e03131;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: auto;
+  height: auto;
+  line-height: normal;
+}
+
+button.delete-btn:hover {
+  background-color: #c92a2a;
+}
+
+/* 페이지네이션 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+  gap: 8px;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  background: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  width: auto;
+  font-size: 14px;
+  height: auto;
+  line-height: normal;
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.pagination button.active {
+  background: #5a67d8;
+  color: white;
+  border-color: #5a67d8;
+  font-weight: 600;
+}

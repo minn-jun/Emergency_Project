@@ -5,7 +5,6 @@ let lastMsgId = null;
 function mapDisasterType(disaster_type) {
   const type = disaster_type.trim();
   if (type === '지진') return 'earthquake';
-  if (['태풍', '홍수', '호우', '강풍', '풍랑'].includes(type)) return 'flood';
   if (type === '폭염') return 'heatwave';
   if (['한파', '대설'].includes(type)) return 'coldwave';
   if (['민방공', '공습', '테러', '화생방사고', '비상사태'].includes(type)) return 'attack';
