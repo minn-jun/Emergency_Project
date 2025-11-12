@@ -184,8 +184,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 로그아웃
   logoutBtn.addEventListener('click', async () => {
-    await fetch('/api/admin/logout', { method: 'POST' });
-    window.location.href = '/';
+    // confirm 함수는 '확인'을 누르면 true, '취소'를 누르면 false를 반환합니다.
+    if (!confirm('정말 로그아웃 하시겠습니까?')) {
+      return; // 취소를 누르면 함수 종료 (로그아웃 안 함)
+    }
+
+    try {
+      const response = await fetch('/api/admin/logout', { method: 'POST' });
+      if (response.ok) {
+        window.location.href = '/'; // 메인 페이지로 이동
+      } else {
+        alert('로그아웃 처리에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('로그아웃 에러:', error);
+      alert('서버 통신 중 오류가 발생했습니다.');
+    }
   });
 
   // 초기 로드
